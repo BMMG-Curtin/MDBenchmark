@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -P group_name_on_hpc           # if your hpc requires group
+# Standard output and error:
+#PBS -o ./{{ job_name }}.out.%j
+#PBS -e ./{{ job_name }}.err.%j
+
+#PBS -l ncpus={{ n_nodes * 48 }}    # change to cores per node
+#PBS -l mem={{ n_nodes * 64 }}GB    # change to mem per node
+#PBS -l walltime={{ formatted_time }}
+#PBS -l wd
+ 
+# load modules
+module load openmpi                 # change to modules required
+module load {{ module }}
+
+# Run {{ module }} for {{ time  }} minutes
+mpirun gmx_mpi mdrun -v -maxh {{ time / 60 }} -deffnm {{ name }}    # modern gromacs specific
