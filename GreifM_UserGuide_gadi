@@ -1,4 +1,4 @@
-# The following is based on the MDBenchmark docs https://mdbenchmark.readthedocs.io/en/latest/install.html, and some of nci's docs https://opus.nci.org.au/display/Help/ALCS+Training+Day?preview=%2F50235631%2F50236246%2FSetup_Python_Environment.pdf. 
+# The following is based on the MDBenchmark docs https://mdbenchmark.readthedocs.io/en/latest/ and some of nci's docs https://opus.nci.org.au/display/Help/ALCS+Training+Day?preview=%2F50235631%2F50236246%2FSetup_Python_Environment.pdf. 
 # It is specific to my run on Gadi, but (when read with the MDB docs) should be easily replicated on other systems
 # load Python3 and pip modules and dependencies 
     module load intel-mkl/2019.3.199 python3/3.7.4
