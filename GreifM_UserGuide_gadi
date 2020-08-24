@@ -2,7 +2,7 @@
 # It is specific to my run on Gadi, but (when read with the MDB docs) should be easily replicated on other systems
 # load Python3 and pip modules and dependencies 
     module load intel-mkl/2019.3.199 python3/3.7.4
-# initiate a python environment in your run directory (you must be in this dir to use the env);
+# initiate a python environment while in your run directory (you must be in this dir to use the env);
     pip install --user pipenv
 # install host file if needed 
   # host files are the interface between your tpr and the HPC scheduling software
