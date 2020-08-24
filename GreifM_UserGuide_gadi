@@ -1,0 +1,16 @@
+# The following is based on the MDBenchmark docs https://mdbenchmark.readthedocs.io/en/latest/install.html, and some of nci's docs https://opus.nci.org.au/display/Help/ALCS+Training+Day?preview=%2F50235631%2F50236246%2FSetup_Python_Environment.pdf. 
+# It is specific to my run on Gadi, but (when read with the MDB docs) should be easily replicated on other systems
+# load Python3 and pip modules and dependencies 
+    module load intel-mkl/2019.3.199 python3/3.7.4
+# initiate a python environment in your run directory (you must be in this dir to use the env);
+    pip install --user pipenv
+# install host file if needed 
+  # host files are the interface between your tpr and the HPC scheduling software
+    mkdir ~/.config/MDBenchmark; cp gadi.sh ~/.config/MDBenchmark/gadi
+# generate benchmark 
+  # where --name is the name of your tpr (ie OLysRNA_min_eq_prod.tpr)
+    pipenv run mdbenchmark generate --name OLysRNA_min_eq_prod --host gadi --module gromacs/2018.3 --min-nodes=1 --max-nodes 12 --time 15
+# analyse resultant data
+    pipenv run mdbenchmark analyse -s data.csv
+# create plot 
+    pipenv run mdbenchmark plot  --csv data.csv --output-format png --output-name OLysRNA_benchmarking --no-watermark  
