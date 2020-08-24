@@ -8,7 +8,7 @@
     pip install mdbenchmark
 # install host file if needed 
   # host files are the interface between your tpr and the HPC scheduling software
-    mkdir ~/.config/MDBenchmark; cp gadi.sh ~/.config/MDBenchmark/gadi
+    mkdir ~/.config/MDBenchmark; cp gadi ~/.config/MDBenchmark/ # can be found at https://github.com/BMMG-Curtin/MDBenchmark/tree/develop/mdbenchmark/templates
 # generate benchmark (and wait for it to run)
   # where --name is the name of your tpr (ie OLysRNA_min_eq_prod.tpr)
     pipenv run mdbenchmark generate --name OLysRNA_min_eq_prod --host gadi --module gromacs/2018.3 --min-nodes=1 --max-nodes 12 --time 15
