@@ -1,0 +1,45 @@
+# not currently working - python error
+
+#!/bin/bash -l
+# Group 
+#SBATCH --account=pawsey0110           # if your hpc requires group
+# Standard output and error:
+#SBATCH -o ./{{ job_name }}.out.%j
+#SBATCH -e ./{{ job_name }}.err.%j
+# Initial working directory:
+#SBATCH -D ./
+# Job Name:
+#SBATCH -J {{ job_name }}
+#
+# Queue (Partition):
+{%- if gpu %}
+#SBATCH --partition=gpu
+#SBATCH --constraint='gpu'
+#SBATCH --gres=gpu:2
+
+{%- else %}
+{%- if time is lessthan 30 or time is equalto 30 %}
+#SBATCH --partition=debugq
+{%- elif time is greaterthan 30 and time is lessthan 240 or time is equalto 240 %}
+#SBATCH --partition=workq  
+{%- else %}
+#SBATCH --partition=workq
+{%- endif %}
+{%- endif %}
+#
+# Number of nodes and MPI tasks per node:
+#SBATCH --nodes={{ n_nodes }}
+#SBATCH --ntasks-per-node=24
+# Wall clock limit:
+#SBATCH --time={{ formatted_time }}
+
+module load slurm
+module swap PrgEnv-cray PrgEnv-gnu
+module load {{ module }}
+
+# Run {{ module }} for {{ time  }} minutes
+{%- if mdengine == "gromacs" %}
+srun --mpi=pmi2 -n {{ n_nodes * 24 }} -N {{ n_nodes }} mdrun_mpi_d -v -maxh {{ time / 60 }} -deffnm {{ name }}
+{%- elif mdengine == "namd" %}
+srun namd2 {{ name }}.namd
+{%- endif %}
