@@ -1,0 +1,24 @@
+# not currently working due to python error
+
+# The following is based on the MDBenchmark docs https://mdbenchmark.readthedocs.io/en/latest/ . 
+# It is specific to my run on Magnus, but (when read with the MDB docs) should be easily altered for use on other systems
+# load Python3 and pip modules and dependencies 
+    module load python/3.6.3 pip/19.1.1
+# initiate a python environment while in your run directory (you must be in this dir to use the env)
+    python3 -m venv benchmark-env
+# enter environment    
+    source benchmark-env/bin/activate
+# install MDBenchmark
+    pip install mdbenchmark
+# install host file if needed 
+# host files are the interface between your tpr and the HPC scheduling software
+    mkdir ~/.config/MDBenchmark; cp magnus ~/.config/MDBenchmark/magnus 
+# generate benchmark (and wait for it to run)
+# where --name is the name of your tpr (ie OLysRNA_min_eq_prod.tpr)
+    mdbenchmark generate --name OLysRNA_sol_ion_n_min03 --host magnus --module gromacs/2018.3 --min-nodes=1 --max-nodes 2 --time 5
+#submit job 
+    mdbenchmark submit    # error at this point, python library error
+# analyse resultant data
+    pipenv run mdbenchmark analyse -s data.csv
+# create plot 
+    pipenv run mdbenchmark plot  --csv data.csv --output-format png --output-name OLysRNA_benchmarking --no-watermark 
